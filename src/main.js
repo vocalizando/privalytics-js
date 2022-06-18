@@ -21,12 +21,15 @@
  */
 
 /**
- * @param {string} request_url
+ * @param {string} request_hostname
  * @param {Entry} entry
  * @return {Promise<RequestError | undefined>}
  */
-export async function submitEntry(request_url, entry) {
-    const response = await fetch(request_url, {
+export async function submitEntry(request_hostname, entry) {
+    const request_url_object = new URL(request_hostname)
+    request_url_object.pathname += "api/submit"
+
+    const response = await fetch(request_url_object.href, {
         method: "POST",
         headers: {
             "Accept": "*/*",
@@ -41,12 +44,15 @@ export async function submitEntry(request_url, entry) {
 }
 
 /**
- * @param {string} request_url
+ * @param {string} request_hostname
  * @param {AuthData} auth_data
  * @return {Promise<RequestError | Entry[]>}
  */
-export async function retrieveAllEntries(request_url, auth_data) {
-    const response = await fetch(request_url, {
+export async function retrieveAllEntries(request_hostname, auth_data) {
+    const request_url_object = new URL(request_hostname)
+    request_url_object.pathname += "api/retrieve"
+
+    const response = await fetch(request_url_object.href, {
         method: "POST",
         headers: {
             "Accept": "*/*",
@@ -63,13 +69,16 @@ export async function retrieveAllEntries(request_url, auth_data) {
 }
 
 /**
- * @param {string} request_url
+ * @param {string} request_hostname
  * @param {AuthData} auth_data
  * @param {string} entry_duid
  * @return {Promise<RequestError | Entry[]>}
  */
-export async function deleteEntry(request_url, auth_data, entry_duid) {
-    const response = await fetch(request_url, {
+export async function deleteEntry(request_hostname, auth_data, entry_duid) {
+    const request_url_object = new URL(request_hostname)
+    request_url_object.pathname += "api/delete"
+
+    const response = await fetch(request_url_object.href, {
         method: "POST",
         headers: {
             "Accept": "*/*",
